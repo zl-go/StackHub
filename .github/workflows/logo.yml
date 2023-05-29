@@ -31,7 +31,7 @@ jobs:
           url=$(echo $data | sed 's/en-US/en/' | jq -r '.en')
           echo $url
 
-          logoFile=appmanage/static/images/{$app}-websoft9.png
+          logoFile=appmanage/static/images/${app}-websoft9.png
           rm $logoFile
           
           wget -P appmanage/static/images $url 
