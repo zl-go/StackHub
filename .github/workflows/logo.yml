@@ -30,12 +30,10 @@ jobs:
           fi
           url=$(echo $data | sed 's/en-US/en/' | jq -r '.en')
           echo $url
-          
-          //删除原图片
-          logoFile={$app}-websoft9.png
+
+          logoFile=appmanage/static/images/{$app}-websoft9.png
           rm $logoFile
           
-          //下载图片
           wget -P appmanage/static/images $url 
           
         done
