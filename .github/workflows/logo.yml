@@ -34,7 +34,7 @@ jobs:
           wget -P appmanage/static/images $url
           
           git rm --cached $logoFile
-          git add $logoFile
+
           break
         done
         
