@@ -15,6 +15,9 @@ jobs:
     
     - name: update logo
       run: |
+        git config --global user.name "${{ github.actor }}"
+        git config --global user.email "xxx@websoft9.com"
+        
         files=$(ls appmanage/static/images)
         for file in $files;do
           app=$(echo ${file%%-*})
@@ -29,12 +32,9 @@ jobs:
           url=$(echo $data | sed 's/en-US/en/' | jq -r '.en')
 
           logoFile=appmanage/static/images/${app}-websoft9.png
-          rm -f $logoFile
-          
-          wget -P appmanage/static/images $url
-          
-          git rm --cached $logoFile
-
+          git rm $logoFile
+          git commit -m "delete former logo"
+          wget -P appmanage/static/images $url  
           break
         done
         
