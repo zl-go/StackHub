@@ -32,7 +32,7 @@ jobs:
           echo $url
 
           logoFile=appmanage/static/images/${app}-websoft9.png
-          rm $logoFile
+          rm -f $logoFile
           
           wget -P appmanage/static/images $url 
           
