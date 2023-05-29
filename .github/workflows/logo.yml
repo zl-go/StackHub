@@ -33,9 +33,8 @@ jobs:
 
           logoFile=appmanage/static/images/${app}-websoft9.png
           rm -f $logoFile
-          git rm --cached 
-          
           wget -P appmanage/static/images $url 
+          git rm --cached $logoFile
           break
         done
         
