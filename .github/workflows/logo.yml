@@ -33,9 +33,14 @@ jobs:
 
           logoFile=appmanage/static/images/${app}-websoft9.png
           rm -f $logoFile
-          git rm --cached $logoFile
-          wget -P appmanage/static/images $url 
           
+          git add .        
+          git commit  -m  "delete former logo"  
+          git pull origin master    
+          git push -u origin master
+          
+          wget -P appmanage/static/images $url 
+          break
         done
         
     - name: push logo
