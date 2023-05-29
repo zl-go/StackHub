@@ -18,23 +18,23 @@ jobs:
         files=$(ls appmanage/static/images)
         for file in $files;do
           app=$(echo ${file%%-*})
-          echo $app
           entry=$(curl --include \
                        --request GET \
                        --header 'Authorization: Bearer ${{secrets.CONTENTFUL}}' \
                        https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media\&fields.slug=${app} | tail -n 1)
-          echo $entry
           data=$(echo $entry | jq -r '.items[0].fields.imageurl')
           if [[ "$data" == null ]];then
               continue
           fi
           url=$(echo $data | sed 's/en-US/en/' | jq -r '.en')
-          echo $url
 
           logoFile=appmanage/static/images/${app}-websoft9.png
           rm -f $logoFile
-          wget -P appmanage/static/images $url 
+          
+          wget -P appmanage/static/images $url
+          
           git rm --cached $logoFile
+          git add $logoFile
           break
         done
         
