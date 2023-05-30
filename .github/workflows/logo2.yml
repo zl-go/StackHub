@@ -23,8 +23,7 @@ jobs:
              --request GET \
              --header 'Authorization: Bearer ${{secrets.CONTENTFUL}}' \
              https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media&select=fields.slug,fields.imageurl&locale=en-US | tail -n 1)
-        
-        
-        echo $entry
+        total=$(echo $entry | jq -r '.total')
+        echo $total
 
         
