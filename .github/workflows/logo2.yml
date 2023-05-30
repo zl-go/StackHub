@@ -25,9 +25,6 @@ jobs:
              https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media&select=fields.slug,fields.imageurl&locale=en-US | tail -n 1)
         
         total=$(echo $entry | jq -r '.total')
-        
-        for ((i=0; i<${total}; i++));do
-          app=$(echo $entry | jq -r '.item[0].[$i]')
-          echo $app
-        done
+        echo $total
+
         
