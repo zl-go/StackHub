@@ -15,6 +15,9 @@ jobs:
     
     - name: update logo
       run: |  
+        git config --global user.name "${{ github.actor }}"
+        git config --global user.email "xxx@websoft9.com"
+        
         # 获取contentful中所有url
         entry=$(curl --include \
              --request GET \
@@ -28,7 +31,7 @@ jobs:
             echo $data | sed 's/en-US/en/'
             url=$(echo $data | sed 's/en-US/en/' | jq -r '.fields.imageurl.en')
             echo $url
-            file=$(echo ${url##*/})
+            file=$(echo appmanage/static/images/${url##*/})
             echo $file
             break
         done    
