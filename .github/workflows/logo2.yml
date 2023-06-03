@@ -34,7 +34,7 @@ jobs:
             file=$(echo appmanage/static/images/${url##*/})
             echo $file
             
-            git rm $logoFile
+            git rm $File
             git commit -m "delete former logo"
             wget -P appmanage/static/images $url  
             
