@@ -25,8 +25,8 @@ jobs:
              https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media\&locale=en-US\&select=fields.imageurl |tail -n 1)
         echo $entry
         total=$(echo $entry | jq '.total')
-        for ((i=0; i<${total}; i ++));do
-            data=$(echo $entry | jq '.items[${i}]')
+        for ((i=0; i<${total}; i++));do
+            data=$(echo $entry | jq '.items[$i]')
             echo $data
             echo $data | sed 's/en-US/en/'
             url=$(echo $data | sed 's/en-US/en/' | jq -r '.fields.imageurl.en')
