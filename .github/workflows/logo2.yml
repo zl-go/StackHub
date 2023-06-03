@@ -25,7 +25,8 @@ jobs:
         for ((i=0; i<${total}; i ++));do
             data=$(echo $entry | jq '.items[0]')
             echo $data
-            url=$(echo $data | sed 's/en-US/en/' | jq -r '.fileds.imageurl.en')
+            echo $data | sed 's/en-US/en/'
+            url=$(echo $data | sed 's/en-US/en/' | jq -r '.fields.imageurl.en')
             echo $url
             break
         done    
