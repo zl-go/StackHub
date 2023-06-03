@@ -18,7 +18,7 @@ jobs:
         # 获取contentful中所有url
         entry=$(curl --include \
              --request GET \
-             --header 'Authorization: Bearer ${{secrets.CONTENTFUL_TOKEN}}' \
+             --header 'Authorization: Bearer ${{secrets.CONTENTFUL}}' \
              https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media\&locale=en-US\&select=fields.imageurl)
         echo $entry
         
