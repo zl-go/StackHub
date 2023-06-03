@@ -22,4 +22,5 @@ jobs:
              https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media&select=fields.slug&locale=en-US | tail -n 1)
         echo 'nihao'     
         echo $entry
+        echo $entry | jq -r '.items[0].sys.publishedVersion'
         
