@@ -28,7 +28,7 @@ jobs:
             echo $data | sed 's/en-US/en/'
             url=$(echo $data | sed 's/en-US/en/' | jq -r '.fields.imageurl.en')
             echo $url
-            file=$(echo ${myurl##*/})
+            file=$(echo ${url##*/})
             echo $file
             break
         done    
