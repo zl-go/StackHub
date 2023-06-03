@@ -32,6 +32,21 @@ jobs:
                      --request GET \
                      --header 'Authorization: Bearer ${{secrets.CONTENTFUL}}' \
                      https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media\&fields.slug=${app}\&select=fields.imageurl\&locale=en-US | tail -n 1)
-          echo $item           
+          echo $item
+          url=$(echo $item | sed 's/en-US/en/' | jq -r '.fields.imageurl.en')
+          echo $url
+          file=$(echo appmanage/static/images/${url##*/})
+          echo $file
+
+          if [[ -f ${file} ]];then
+            git rm $file
+            git commit -m "delete former logo"
+          fi
+          wget -P appmanage/static/images $url  
           break
         done
+        
+    - name: push logo
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: update logo
