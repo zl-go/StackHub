@@ -39,8 +39,6 @@ jobs:
               git commit -m "delete former logo"
             fi
             wget -P appmanage/static/images $url  
-            
-            break
         done
         
         
