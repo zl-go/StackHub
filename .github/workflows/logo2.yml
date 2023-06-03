@@ -22,27 +22,12 @@ jobs:
         entry=$(curl --include \
              --request GET \
              --header 'Authorization: Bearer ${{secrets.CONTENTFUL}}' \
-             https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media\&locale=en-US\&select=fields.imageurl |tail -n 1)
+             https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media\&select=fields.slug |tail -n 1)
         echo $entry
-        total=$(echo $entry | jq '.total')
-        for ((i=0; i<${total}; i++));do
-            data=$(echo $entry | jq --arg i $i '.items.\$i')
-            echo $data
-            echo $data | sed 's/en-US/en/'
-            url=$(echo $data | sed 's/en-US/en/' | jq -r '.fields.imageurl.en')
-            echo $url
-            file=$(echo appmanage/static/images/${url##*/})
-            echo $file
-            
-            if [[ -f ${file} ]];then
-              git rm $file
-              git commit -m "delete former logo"
-            fi
-            wget -P appmanage/static/images $url  
-        done
+        applist=$(echo $entry | jq '.items' | .fields.slug)
+        echo $applist
+        
+
         
         
-    - name: push logo
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: update logo
+
