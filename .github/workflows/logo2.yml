@@ -24,7 +24,7 @@ jobs:
              --header 'Authorization: Bearer ${{secrets.CONTENTFUL}}' \
              https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media\&select=fields.slug |tail -n 1)
         echo $entry
-        applist=$(echo $entry | sed 's/en-US/en/' | jq '.items[] | .fields.slug.en')
+        applist=$(echo $entry | sed 's/en-US/en/g' | jq -r '.items[] | .fields.slug.en')
         echo $applist
         
 
