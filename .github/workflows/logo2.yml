@@ -28,10 +28,10 @@ jobs:
         echo $applist
         
         for app in ${applist};do
-          if [[ $app!=null ]];then
+          if [[ $app==null ]];then
             continue
           fi
-          if [[ $app==customer-ibox ]];then
+          if [[ $app=="customer-ibox" ]];then
             continue
           fi
           item=$(curl --include \
