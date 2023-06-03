@@ -19,6 +19,6 @@ jobs:
         entry=$(curl --include \
              --request GET \
              --header 'Authorization: Bearer ${{secrets.CONTENTFUL_TOKEN}}' \
-             https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media\&locale=en-US\&select=fields.imageurl | tail -n 1)
+             https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media\&locale=en-US\&select=fields.imageurl)
         echo $entry
         
