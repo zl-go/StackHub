@@ -24,6 +24,6 @@ jobs:
         total=$(echo $entry | jq '.total')
         for ((i=0; i<${total}; i ++));do
             data=$(echo $entry | jq '.items[0]')
-            echo $data
-            break
+            url=$(echo $data | sed 's/en-US/en/' | jq -r '.en')
+            echo &url
         done    
