@@ -19,7 +19,7 @@ jobs:
         entry=$(curl --include \
              --request GET \
              --header 'Authorization: Bearer ${{secrets.CONTENTFUL}}' \
-             https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media&select=fields.slug&locale=en-US | tail -n 1)
+             https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?select=fields.slug&locale=en-US&content_type=media | tail -n 1)
         echo 'nihao'     
         echo $entry
         
