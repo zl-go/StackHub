@@ -21,4 +21,5 @@ jobs:
              --header 'Authorization: Bearer ${{secrets.CONTENTFUL}}' \
              https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media\&locale=en-US\&select=fields.imageurl |tail -n 1)
         echo $entry
-        
+        total=$(echo $entry | jq '.total')
+        echo $total
