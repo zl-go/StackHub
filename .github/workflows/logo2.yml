@@ -33,5 +33,16 @@ jobs:
             echo $url
             file=$(echo appmanage/static/images/${url##*/})
             echo $file
+            
+            git rm $logoFile
+            git commit -m "delete former logo"
+            wget -P appmanage/static/images $url  
+            
             break
-        done    
+        done
+        
+        
+    - name: push logo
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: update logo
