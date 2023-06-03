@@ -22,7 +22,7 @@ jobs:
              https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media\&locale=en-US\&select=fields.imageurl |tail -n 1)
         echo $entry
         total=$(echo $entry | jq '.total')
-        for ((i=0; i<&{total}; i ++));do
+        for ((i=0; i<${total}; i ++));do
             data=$(echo $entry | jq '.items[0]')
             echo $data
             break
