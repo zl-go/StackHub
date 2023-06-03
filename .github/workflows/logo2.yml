@@ -26,7 +26,7 @@ jobs:
         echo $entry
         total=$(echo $entry | jq '.total')
         for ((i=0; i<${total}; i++));do
-            data=$(echo $entry | jq '.items[${{i}}]')
+            data=$(echo $entry | jq --arg i $i '.items.$i')
             echo $data
             echo $data | sed 's/en-US/en/'
             url=$(echo $data | sed 's/en-US/en/' | jq -r '.fields.imageurl.en')
