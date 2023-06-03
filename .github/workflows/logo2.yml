@@ -18,9 +18,8 @@ jobs:
         # 获取contentful中所有url
         entry=$(curl --include \
              --request GET \
-             --header 'Authorization: Bearer ${{secrets.CONTENTFUL}}' \
-             https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media&select=fields.slug | tail -n 1)
-        echo 'nihao'     
+             --header 'Authorization: Bearer ${{secrets.CONTENTFUL_TOKEN}}' \
+             https://api.contentful.com/spaces/ffrhttfighww/environments/master/entries?content_type=product\&select=fields.slug,fileds.imageurl\&locale=en-US | tail -n 1)
         echo $entry
-        echo $entry | jq -r '.items[0].sys.publishedVersion'
+        echo $entry | jq -r '.total'
         
