@@ -33,7 +33,7 @@ jobs:
                      --header 'Authorization: Bearer ${{secrets.CONTENTFUL}}' \
                      https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media\&fields.slug=${app}\&select=fields.imageurl\&locale=en-US | tail -n 1)
           echo $item
-          url=$(echo $item | sed 's/en-US/en/' | jq -r '.fields.imageurl.en')
+          url=$(echo $item | sed 's/en-US/en/' | jq -r '.items[0].fields.imageurl.en')
           echo $url
           file=$(echo appmanage/static/images/${url##*/})
           echo $file
