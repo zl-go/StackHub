@@ -34,10 +34,3 @@ jobs:
                          https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media\&fields.slug=${{app}} | tail -n 1)
           break
         done
-        
-        
-		
-
-        
-        
-
