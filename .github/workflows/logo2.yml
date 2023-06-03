@@ -34,8 +34,10 @@ jobs:
             file=$(echo appmanage/static/images/${url##*/})
             echo $file
             
-            git rm $file
-            git commit -m "delete former logo"
+            if [[ -e ${file} ]];then
+              git rm $file
+              git commit -m "delete former logo"
+            fi
             wget -P appmanage/static/images $url  
             
             break
