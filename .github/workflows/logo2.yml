@@ -37,6 +37,9 @@ jobs:
           if [ "$app" = "onlyoffice" ];then
             continue
           fi
+          if [ "$app" = "vendor-mingdao" ];then
+            continue
+          fi
           item=$(curl --include \
                      --request GET \
                      --header 'Authorization: Bearer ${{secrets.CONTENTFUL}}' \
