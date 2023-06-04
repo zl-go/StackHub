@@ -40,7 +40,9 @@ jobs:
           
           time=$(curl --connect-timeout 3 -s -w '%{time_total}\n' -o /dev/null $url)
           echo $time
-          
+          if [ $time -gt 1.5 ];then 
+            continue
+          fi
           if [[ -f ${file} ]];then
             git rm $file
             git commit -m "delete former logo"
