@@ -39,9 +39,7 @@ jobs:
           echo $file
           
           time=$(curl --connect-timeout 3 -s -w '%{time_total}\n' -o /dev/null $url)
-          if [[ $time>3]];then
-            continue;
-          fi
+          echo $time
           
           if [[ -f ${file} ]];then
             git rm $file
