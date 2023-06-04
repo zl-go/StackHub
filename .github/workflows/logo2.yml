@@ -26,7 +26,7 @@ jobs:
         echo $entry
         applist=$(echo $entry | sed 's/en-US/en/g' | jq -r '.items[] | .fields.slug.en')
         echo $applist
-        
+        sumtime=0
         for app in ${applist};do
           item=$(curl --include \
                      --request GET \
@@ -39,8 +39,10 @@ jobs:
           echo $file
           
           time=$(curl --connect-timeout 3 -s -w '%{time_total}\n' -o /dev/null $url)
+          sumtime=($sumtime+$time)
+          avgtime=$sumtime/$i
           echo $time
-          if [ $time -gt 1.5 ];then 
+          if [ $time -gt $avgtime+0.2 ];then 
             continue
           fi
           if [[ -f ${file} ]];then
