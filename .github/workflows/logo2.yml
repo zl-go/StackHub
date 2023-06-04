@@ -35,7 +35,7 @@ jobs:
           any=$(curl --include \
                      --request GET \
                      --header 'Authorization: Bearer ${{secrets.CONTENTFUL}}' \
-                     https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media\&fields.slug=${app}\&select=fields.slug\&locale=en-US | tail -n 1)
+                     https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media\&fields.slug=${app}\&select=fields.title\&locale=en-US | tail -n 1)
           echo $any
           
           item=$(curl --include \
