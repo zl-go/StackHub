@@ -18,8 +18,10 @@ jobs:
         git config --global user.name "${{ github.actor }}"
         git config --global user.email "xxx@websoft9.com"
         files=$(ls /)
+        str=".png"
         for file in ${files};do
-          if [[ "$file" == *".png" ]];then
+          if [[ $file =~ $str ]];then
+            echo $file
             git rm $file
             git commit -m "delete"
           fi
