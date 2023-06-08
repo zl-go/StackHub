@@ -17,14 +17,46 @@ jobs:
       run: |  
         git config --global user.name "${{ github.actor }}"
         git config --global user.email "xxx@websoft9.com"
-        files=$(ls /)
-        str=".png"
-        for file in ${files};do
-          echo $file
-          if [[ $file =~ $str ]];then
-            echo $file
-            git rm $file
-            git commit -m "delete"
+        
+        # 获取contentful中所有url
+        entry=$(curl --include \
+             --request GET \
+             --header 'Authorization: Bearer ${{secrets.CONTENTFUL}}' \
+             https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media\&select=fields.slug |tail -n 1)
+        echo $entry
+        applist=$(echo $entry | sed 's/en-US/en/g' | jq -r '.items[] | .fields.slug.en')
+        echo $applist
+        
+        for app in ${applist};do
+          if [ "$app" = "onlyoffice" ];then
+            continue
           fi
+          if [ "$app" = "vendor-mingdao" ];then
+            continue
+          fi
+          if [ "$app" = null ];then
+            continue
+          fi
+          item=$(curl --include \
+                     --request GET \
+                     --header 'Authorization: Bearer ${{secrets.CONTENTFUL}}' \
+                     https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media\&fields.slug=${app}\&select=fields.imageurl\&locale=en-US | tail -n 1)
+          echo $item
+          url=$(echo $item | sed 's/en-US/en/' | jq -r '.items[0].fields.imageurl.en')
+          echo $url
+          file=$(echo appmanage/static/images/${url##*/})
+          echo $file
+          
+          wget --timeout=3 -q "$url" || continue
+          
+          if [[ -f ${file} ]];then
+            git rm $file
+            git commit -m "delete former logo"
+          fi
+          wget --no-check-certificate -P appmanage/static/images $url  
         done
-        git push -u
+        
+    - name: push logo
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: update logo
