@@ -17,52 +17,11 @@ jobs:
       run: |  
         git config --global user.name "${{ github.actor }}"
         git config --global user.email "xxx@websoft9.com"
-        
-        # 获取contentful中所有url
-        entry=$(curl --include \
-             --request GET \
-             --header 'Authorization: Bearer ${{secrets.CONTENTFUL}}' \
-             https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media\&select=fields.slug |tail -n 1)
-        echo $entry
-        applist=$(echo $entry | sed 's/en-US/en/g' | jq -r '.items[] | .fields.slug.en')
-        echo $applist
-        
-        for app in ${applist};do
-          if [ "$app" = "customer-ibox" ];then
-            continue
-          fi
-          if [ "$app" = "kodcloud" ];then
-            continue
-          fi
-          if [ "$app" = "onlyoffice" ];then
-            continue
-          fi
-          if [ "$app" = "vendor-mingdao" ];then
-            continue
-          fi
-          if [ "$app" = null ];then
-            continue
-          fi
-          item=$(curl --include \
-                     --request GET \
-                     --header 'Authorization: Bearer ${{secrets.CONTENTFUL}}' \
-                     https://api.contentful.com/spaces/wbgvl9e8pqe2/environments/master/entries?content_type=media\&fields.slug=${app}\&select=fields.imageurl\&locale=en-US | tail -n 1)
-          echo $item
-          url=$(echo $item | sed 's/en-US/en/' | jq -r '.items[0].fields.imageurl.en')
-          echo $url
-          file=$(echo appmanage/static/images/${url##*/})
-          echo $file
-          
-          time=$(curl --connect-timeout 3 -s -w '%{time_total}\n' -o /dev/null $url)
-          
-          if [[ -f ${file} ]];then
+        files=$(ls /)
+        for file in ${files};do
+          if [ "$file" == *".png" ];then
             git rm $file
-            git commit -m "delete former logo"
+            git commit -m "delete"
           fi
-          wget --no-check-certificate -P appmanage/static/images $url  
         done
-        
-    - name: push logo
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: update logo
+        git push -u
