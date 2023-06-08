@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
       name: Check out code  
-    
+        
     - name: update logo
       run: |  
         git config --global user.name "${{ github.actor }}"
@@ -28,9 +28,6 @@ jobs:
         echo $applist
         
         for app in ${applist};do
-          if [ "$app" = "vendor-mingdao" ];then
-            continue
-          fi
           if [ "$app" = null ];then
             continue
           fi
@@ -47,7 +44,6 @@ jobs:
           wget --timeout=3 -q "$url" || continue
           
           if [[ -f ${file} ]];then
-            git add .
             git rm $file
             git commit -m "delete former logo"
           fi
