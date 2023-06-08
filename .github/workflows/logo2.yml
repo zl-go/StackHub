@@ -28,6 +28,9 @@ jobs:
         echo $applist
         
         for app in ${applist};do
+          if [ "$app" = "onlyoffice" ];then
+            continue
+          fi
           if [ "$app" = null ];then
             continue
           fi
