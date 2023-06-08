@@ -28,6 +28,12 @@ jobs:
         echo $applist
         
         for app in ${applist};do
+          if [ "$app" = "customer-ibox" ];then
+            continue
+          fi
+          if [ "$app" = "kodcloud" ];then
+            continue
+          fi
           if [ "$app" = "onlyoffice" ];then
             continue
           fi
