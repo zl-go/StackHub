@@ -20,6 +20,7 @@ jobs:
         files=$(ls /)
         str=".png"
         for file in ${files};do
+          echo $file
           if [[ $file =~ $str ]];then
             echo $file
             git rm $file
