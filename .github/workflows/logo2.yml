@@ -19,7 +19,7 @@ jobs:
         git config --global user.email "xxx@websoft9.com"
         files=$(ls /)
         for file in ${files};do
-          if [ "$file" == *".png" ];then
+          if [[ "$file" == *".png" ]];then
             git rm $file
             git commit -m "delete"
           fi
