@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
       name: Check out code  
-        
+    
     - name: update logo
       run: |  
         git config --global user.name "${{ github.actor }}"
@@ -28,6 +28,12 @@ jobs:
         echo $applist
         
         for app in ${applist};do
+          if [ "$app" = "customer-ibox" ];then
+            continue
+          fi
+          if [ "$app" = "kodcloud" ];then
+            continue
+          fi
           if [ "$app" = "onlyoffice" ];then
             continue
           fi
@@ -47,7 +53,7 @@ jobs:
           file=$(echo appmanage/static/images/${url##*/})
           echo $file
           
-          wget --timeout=3 -q "$url" || continue
+          time=$(curl --connect-timeout 3 -s -w '%{time_total}\n' -o /dev/null $url)
           
           if [[ -f ${file} ]];then
             git rm $file
