@@ -47,7 +47,7 @@ jobs:
           file=$(echo appmanage/static/images/${url##*/})
           echo $file
           
-          wget --timeout=3 -q "$url" || continue
+          wget --timeout=3 -q "$url"  || echo "超时"
           
           if [[ -f ${file} ]];then
             git rm $file
