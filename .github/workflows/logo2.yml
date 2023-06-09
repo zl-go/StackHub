@@ -14,10 +14,7 @@ jobs:
       name: Check out code  
     
     - name: update logo
-      run: |  
-        git config --global user.name "${{ github.actor }}"
-        git config --global user.email "xxx@websoft9.com"
-        
+      run: |   
         # 获取contentful中所有url
         entry=$(curl --include \
              --request GET \
@@ -28,18 +25,6 @@ jobs:
         echo $applist
         
         for app in ${applist};do
-          if [ "$app" = "customer-ibox" ];then
-            continue
-          fi
-          if [ "$app" = "kodcloud" ];then
-            continue
-          fi
-          if [ "$app" = "onlyoffice" ];then
-            continue
-          fi
-          if [ "$app" = "vendor-mingdao" ];then
-            continue
-          fi
           if [ "$app" = null ];then
             continue
           fi
@@ -52,12 +37,10 @@ jobs:
           echo $url
           file=$(echo appmanage/static/images/${url##*/})
           echo $file
-          
           if [[ -f ${file} ]];then
-            git rm $file
-            git commit -m "delete former logo"
+            continue
           fi
-          wget --no-check-certificate -P appmanage/static/images $url  
+          wget --timeout=3 -q -P appmanage/static/images"$url"
         done
         
     - name: push logo
