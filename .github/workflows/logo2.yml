@@ -42,7 +42,7 @@ jobs:
             continue
           fi
           echo "执行wget"
-          wget --timeout=3 -q -P appmanage/static/images"$url"
+          wget --timeout=3 -q -P appmanage/static/images "$url"
         done
         
     - name: push logo
